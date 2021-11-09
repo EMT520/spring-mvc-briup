@@ -12,7 +12,7 @@
 	<!--3.配置适配器： HandlerAdapter  -->
 	<bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"/>
 	<!--4.配置控制器/处理器： handler  -->
-	<bean name="/hello" class="com.briup.web.JackController"/>
+	<bean name="/hello" class="com.briup.web.controller.JackController"/>
 	<!--5.视图解析器
 		spring读取bean中class属性值创建java对象
 		java对象的属性通过property标签

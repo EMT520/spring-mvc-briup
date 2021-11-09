@@ -10,5 +10,5 @@
 	<bean class="com.briup.web.adapter.MyHandlerAdapter"/>
 	
 	<!--2. 配置自定义的处理器对象  -->
-	<bean name="/test2" class="com.briup.web.MyTestController"/>
+	<bean name="/test2" class="com.briup.web.controller.MyTestController"/>
 </beans>

@@ -27,6 +27,6 @@
 	<mvc:default-servlet-handler/>
 	
 	<!-- 5添加请求url对应的控制器 -->
-	<bean name="/hello" class="com.briup.web.JackController"></bean>
+	<bean name="/hello" class="com.briup.web.controller.JackController"></bean>
 	
 </beans>

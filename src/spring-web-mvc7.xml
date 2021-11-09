@@ -39,7 +39,7 @@
 	<mvc:default-servlet-handler/>
 	
 	<!-- 5添加请求url对应的控制器 -->
-	<bean name="/hello" class="com.briup.web.JackController"></bean>
-	<bean name="/test" class="com.briup.web.TestController"></bean>
-	<bean name="/userLogin" class="com.briup.web.LoginController"></bean>
+	<bean name="/hello" class="com.briup.web.controller.JackController"></bean>
+	<bean name="/test" class="com.briup.web.controller.TestController"></bean>
+	<bean name="/userLogin" class="com.briup.web.controller.LoginController"></bean>
 </beans>
