@@ -1,7 +1,7 @@
-# spring-mvc-net
+# spring-mvc-briup
 
 #### 介绍
-虚拟现实班
+杰普实验班
 
 #### 软件架构
 基于SpringMVC框架搭建的maven项目
