@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:p="http://www.springframework.org/schema/p"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:mvc="http://www.springframework.org/schema/mvc"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+	<!--
+	    在xml文件中我们可以省略处理器、映射器的配置，只要提供以下配置：
+	    1.视图解析器
+	    2.处理静态资源的访问标签
+	    3.处理器
+	-->
+	<!--1.视图解析器
+    作用： 将逻辑视图名转换为物理视图
+    例如： 将jack视图名转换为 /WEB-INF/jsp/jack.jsp 物理视图名
+  -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<!--可以实现解析jsp页面的jstl标签-->
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+		<!--配置物理视图前缀信息-->
+		<property name="prefix" value="/WEB-INF/jsp/"></property>
+		<!--配置物理视图后缀信息-->
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+	<!--2.解决静态资源无法访问的问题-->
+	<mvc:default-servlet-handler/>
+	<!--3.配置控制器/处理器： handler
+		作用：接收请求信息，作出响应操作
+	-->
+	<bean name="/hello" class="com.briup.web.controller.part1.JackController"/>
+	<bean name="/response" class="com.briup.web.controller.part1.ResponseController"/>
+	<bean name="/request" class="com.briup.web.controller.part1.RequestController"/>
+</beans>
