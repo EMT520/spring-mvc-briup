@@ -83,6 +83,8 @@ public class MethodParamController {
      *  请求体： id:1&name:tom&address.id:101&address.city:北京
      * @param s  请求体中参数被自动封装到Student对象中，需要参数名和属性名字一致
      * @return 逻辑视图名
+     *  SpringMVC框架调用方法前 自动封装请求参数为Student对象
+     *
      */
     @RequestMapping("/test4")
     public String test4(Student s){
@@ -105,8 +107,8 @@ public class MethodParamController {
             ${m} ${m2} ${m3}
          */
         m.addAttribute("m","tom");
-        m.addAttribute("m2","jack");
-        m.addAttribute("m3","bob");
+        m2.addAttribute("m2","jack");
+        m3.put("m3","bob");
         return "jack";
     }
 

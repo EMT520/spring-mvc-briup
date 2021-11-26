@@ -11,9 +11,6 @@
 </head>
 <body>
     <h3>hello ${username}</h3>
-    <h3>hello ${string}</h3>
-    <h3>hello ${integerList}</h3>
-    <h3>${integerList}</h3>
-    <h3>${name}</h3>
+    <h3>hello ${m} ${m2} ${m3}</h3>
 </body>
 </html>
