@@ -14,6 +14,9 @@ import java.util.Date;
 public class Student {
 	private int id;//学号
 	private String name;//姓名
+	//@DateTimeFormat 可以解决接收到的字符串日期参数转换为Date类型
+	//@DateTimeFormat(pattern = "yyyy/MM/dd")
+	@JsonSerialize(using = DateJsonSerialize.class)
 	private Date dob;//出生日期
 	//一个学生对应唯一的一个地址信息
 	private Address address;//地址
