@@ -1,18 +1,20 @@
 <%--
-  Created by IntelliJ IDEA.
-  User: lining
-  Date: 2021/11/26
-  Time: 1:12
-  To change this template use File | Settings | File Templates.
+     springMVC中封装了表单标签，这些标签可以访问到Modelm模型对象中的数据
+
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%--添加spring 提供的标签--%>
+<%--引入标签头文件 添加spring 提供的标签--%>
 <%@taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
     <title>Title</title>
 </head>
 <body>
+    <%--
+          modelAttribute ： 获取模型对象中teacher对象
+
+
+    --%>
     <sf:form modelAttribute="teacher" method="post" action="/dataValidation/test2">
         <sf:label path="id">工号：</sf:label>
         <sf:input path="id"/>
@@ -26,6 +28,7 @@
         <sf:label path="dob">出生日期：</sf:label>
         <sf:input path="dob"/>
         <sf:errors path="dob" cssStyle="color:red"/><br>
+        <sf:button>提交</sf:button>
     </sf:form>
 </body>
 </html>

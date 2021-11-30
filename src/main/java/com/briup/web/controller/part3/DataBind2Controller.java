@@ -89,7 +89,7 @@ public class DataBind2Controller {
       * @return
       */
      @RequestMapping("/test3")
-     public String test11(@ModelAttribute String name){
+     public String test11(@ModelAttribute("name") String name){
           //打印输出模型对象中的name对应的值tom
           System.out.println(name);
           return "jack";
@@ -97,12 +97,11 @@ public class DataBind2Controller {
 
      /**
       * http://localhost:8888/dataBind2/test4?name=tim
-      * 如果模型中已经有了指定name的值， @ModelAttribute 还会从模型中取值
-      * @param name
+      * @param name 从请求参数中获取值
       * @return
       */
      @RequestMapping("/test4")
-     public String test12(@ModelAttribute @RequestParam String name, Model model){
+     public String test12(@ModelAttribute("name") @RequestParam String name, Model model){
           //打印输出请求参数中的name对应的值tim
           System.out.println(name);
           System.out.println(model);
@@ -114,7 +113,7 @@ public class DataBind2Controller {
       * 自动调用@InitBinder方法,将字符串时间转换为Date对象
       * @param wb
       */
-     @InitBinder
+     //@InitBinder
      public void StringConvertDate(WebDataBinder wb){
           System.out.println("自动调用@InitBinder方法,将字符串时间转换为Date对象");
           //1.设置字符串转换格式
