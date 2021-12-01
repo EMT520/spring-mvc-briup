@@ -72,7 +72,7 @@ public class DataBindController {
      *  1.请求URL中的模板变量值jack映射到功能处理方法的参数name
      *  2.@PathVariabl自动的把数据放到模型中去，页面中可以直接使用EL表达式取值
      *
-     * @param userId
+     * @param username
      * @return
      */
     @RequestMapping("/test5/{username}")
@@ -118,5 +118,6 @@ public class DataBindController {
         System.out.println("host:"+host);
         return "jack";
     }
+
 
 }

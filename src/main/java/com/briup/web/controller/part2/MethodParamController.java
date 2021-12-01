@@ -8,6 +8,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -23,17 +24,21 @@ import java.util.Map;
  *   4. 值对象（Value Object）
  *   5. Model、Map、ModelMap
  *   6. HttpEntity<T>和ResponseEntity<T>
+ *       结论： 定义方法中只要求方法的参数类型即可，
+ *       对于参数的个数 参数的位置 不作限制。
+ *       参数对象通过spring框架自动注入
  */
 @Controller
 @RequestMapping("/methodParam")
 public class MethodParamController {
     /**
      * http://localhost:8888/methodParam/test?id=1&name=jack
-     * @param request 请求对象
+     * @param request 请求对象  tomcat -->spring --->test
      * @param response 响应对象
      */
     @RequestMapping("/test")
     public void test(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        ServletInputStream inputStream = request.getInputStream();
         //1.使用请求对象获取请求参数
         String id = request.getParameter("id");
         String name = request.getParameter("name");
@@ -54,9 +59,10 @@ public class MethodParamController {
      */
     @RequestMapping("/test2")
     public void test2(InputStream in, OutputStream out) throws IOException {
-        //1.将字节流转换为字符串流
+        //1.将字节流转换为字符流
         BufferedReader br = new BufferedReader(new InputStreamReader(in));
         String line = null;
+        //2.使用字符流实现读取每行数据
         while((line = br.readLine()) != null){
             System.out.println("请求体信息："+line);
         }
@@ -68,7 +74,7 @@ public class MethodParamController {
      * http://localhost:8888/methodParam/test3
      * //1.当请求头中不包含jsessionid时，自动注入新的session对象给test3方法
      * //2.当请求头中包含jsessionid时，自动注入jsessionid对应的session对象给test3方法
-     * @param session 会话对象
+     * @param session 会话对象  tomcat
      * @return 逻辑视图名
      */
     @RequestMapping("/test3")
@@ -89,7 +95,13 @@ public class MethodParamController {
         System.out.println(s);
         return "jack";
     }
-
+    public String getStudent(HttpServletRequest request){
+        //1.接收参数
+        String id = request.getParameter("id");
+        String name = request.getParameter("name");
+        Student s = new Student(Integer.parseInt(id), name);
+        return "jack";
+    }
     /**
      * http://localhost:8888/methodParam/test5
      * @param m m2 m3 注入的是三个不同的类型参数，但三者是同一个对象
@@ -105,8 +117,8 @@ public class MethodParamController {
             ${m} ${m2} ${m3}
          */
         m.addAttribute("m","tom");
-        m.addAttribute("m2","jack");
-        m.addAttribute("m3","bob");
+        m2.addAttribute("m2","lisi");
+        m3.put("m3","jack");
         return "jack";
     }
 
@@ -133,12 +145,17 @@ public class MethodParamController {
      */
     @RequestMapping("/test7")
     public ResponseEntity<String> test7(){
-        //1.创建请求头对象
+        //1.创建响应头对象
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(new MediaType("text","html", Charset.forName("utf-8")));
-        //2.设置请求体
+        //2.设置响应体
         String body = "hello world";
         ResponseEntity<String> entity = new ResponseEntity<String>(body,headers,HttpStatus.OK);
         return entity;
+    }
+    @RequestMapping("/method")
+    public String method(HttpServletRequest request,HttpSession session,Model m){
+        //参数为输出流 响应对象时 方法返回值必须是void类型
+        return "jack";
     }
 }

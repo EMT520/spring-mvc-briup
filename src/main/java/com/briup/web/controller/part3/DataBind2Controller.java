@@ -1,5 +1,6 @@
 package com.briup.web.controller.part3;
 
+import com.briup.bean.Address;
 import com.briup.bean.Student;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.context.annotation.Scope;
@@ -29,6 +30,17 @@ import java.util.List;
 @RequestMapping("/dataBind2")
 @Scope("prototype") //原型模式，每次请求都会创建一个处理器对象，默认是单例对象
 public class DataBind2Controller {
+     /**
+      * GET url?name=jack
+      * POST url
+      * name=jack
+      * @param name
+      */
+     @RequestMapping("/method")
+     public String method(String name,Model m){
+          System.out.println("模型数据："+m);
+          return "jack";
+     }
 
      public DataBind2Controller() {
           System.out.println("创建处理器DataBind2Controller对象");
@@ -49,6 +61,7 @@ public class DataBind2Controller {
       */
      @ModelAttribute
      public List<String> test2(){
+          System.out.println("test2...");
           return Arrays.asList("A","B","C");
      }
 
@@ -58,6 +71,7 @@ public class DataBind2Controller {
       */
      @ModelAttribute
      public Student test3(){
+          System.out.println("test3....");
           return  new Student(1,"jack");
      }
 
@@ -80,7 +94,11 @@ public class DataBind2Controller {
           System.out.println(model);//打印出：{string=jack, student=Student{id=1, name='jack', dob=null, address=null}, name=tom, stringList=[A, B, C]}
           return "jack";
      }
-
+     @RequestMapping("/mehtod3")
+     public String method3(@ModelAttribute("name") @RequestParam String name){
+          System.out.println("method3:"+name);
+          return "jack";
+     }
      /**
       * http://localhost:8888/dataBind2/test3
       * 如果模型中已经有了指定name的值， @ModelAttribute 还会从模型中取值
@@ -126,7 +144,7 @@ public class DataBind2Controller {
      /**
       * POST http://localhost:8888/dataBind2/test5
       * 请求体： id=1&name=jack&dob=1996-10-20
-      * @param s
+      * @param s SpringMVC创建的Student对象 自动注入
       * @return
       */
      @RequestMapping("/test5")
@@ -159,7 +177,9 @@ public class DataBind2Controller {
      @RequestMapping("/findStudentById")
      @ResponseBody
      public Student test13(){
-         return new Student(1,"jack");
+          Student s = new Student(1, "jack");
+          s.setAddress(new Address(101,"北京"));
+          return s;
      }
      /**
       * http://localhost:8888/dataBind2/findStudentDobById
@@ -175,6 +195,12 @@ public class DataBind2Controller {
      public Student test14(){
           Student s = new Student(1, "jack");
           s.setDob(new Date());
+          return s;
+     }
+     @RequestMapping("/method2")
+     @ResponseBody
+     public Student method2(@RequestBody Student s){
+          // s 可以从请求参数 ，模型对象中
           return s;
      }
 }

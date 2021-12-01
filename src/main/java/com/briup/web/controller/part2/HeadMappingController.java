@@ -85,6 +85,7 @@ public class HeadMappingController {
 
     /**
      * http://localhost:8888/headMapping/test7
+     * 请求头： Accept: 星/星  可以接收任意的媒体类型
      * 请求头： Accept： application/json  请求成功
      * 请求头： Accept: text/html  406 不可接受的错误
      * @return 逻辑视图名
