@@ -8,12 +8,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * 第三部分： 3.页面跳转
- *           1.servlet
- *           2.字符串
- *           3.ModelAndView
+ *           1.servlet ： 请求对象 响应对象
+ *           2.字符串   方法的返回值
+ *           3.ModelAndView  方法的返回值
  */
 @Controller()
 @RequestMapping("pageTurn")
@@ -25,8 +26,12 @@ public class PageTurnController {
      */
     @RequestMapping("/test")
     public void test(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //项目的根目录 ： localhost:8888/project/
         String path = "/WEB-INF/jsp/jack.jsp";
-        request.getRequestDispatcher(path).forward(request,response);
+        request.getRequestDispatcher(path).
+                forward(request,response);
+       /* PrintWriter writer = response.getWriter();
+        writer.println("html中每一行代码");*/
     }
 
     /**
@@ -68,6 +73,8 @@ public class PageTurnController {
      */
     @RequestMapping("/test4")
     public String test4(){
+        // /html/login.html
+        //视图解析器： /WEB-INF/jsp/jack.jsp
         return "jack";
     }
 
@@ -113,4 +120,8 @@ public class PageTurnController {
     public ModelAndView test9(){
         return new ModelAndView("redirect:/pageTurn/other");
     }
+    /*
+       返回值为String: 表示 另一个资源  视图资源  url资源
+
+     */
 }

@@ -2,6 +2,7 @@ package com.briup.web.controller.part3;
 
 import com.briup.bean.Student;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -109,10 +110,17 @@ public class DataInteraction {
      * @return 逻辑视图
      */
     @RequestMapping("/test7")
-    public String test7(@RequestBody Map map){
+    public String test7(@RequestBody Map<Integer,Student> map){
         System.out.println(map);
         return "jack";
     }
+
+    /*
+       test(Map<Integer,Student> map)
+       {"1"：{“id”:"1","name":"jack"}}
+       List<Student>
+       List<Map<Integer,Student>>
+     */
 
     /**
      * http://localhost:8888/dataInteraction/test8
@@ -171,6 +179,18 @@ public class DataInteraction {
         HashMap<Object, Object> map = new HashMap<>();
         map.put("id","20210101");
         map.put("name","jack");
+        return map;
+    }
+    @RequestMapping("/student/{id}")
+    @ResponseBody
+    public Map findStudentById(@PathVariable String id){
+        HashMap<Object, Object> map = new HashMap<>();
+        //1.状态码
+        map.put("code","1000");
+        //2.弹框信息
+        map.put("msg","查询成功");
+        //3.页面信息
+        map.put("data",new Student(1,"jack"));
         return map;
     }
 }
