@@ -10,6 +10,9 @@
     <title>Title</title>
 </head>
 <body>
+    <h3>hi ${m}</h3>
+    <h3>hi ${m2}</h3>
+    <h3>hi ${m3}</h3>
     <h3>hello ${username}</h3>
     <h3>hello ${string}</h3>
     <h3>hello ${student}</h3>

@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -38,7 +39,10 @@ public class MethodParamController {
      */
     @RequestMapping("/test")
     public void test(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        ServletInputStream inputStream = request.getInputStream();
+        //输入流和输出流对象
+        request.getInputStream();
+        response.getOutputStream();
+
         //1.使用请求对象获取请求参数
         String id = request.getParameter("id");
         String name = request.getParameter("name");
@@ -47,7 +51,7 @@ public class MethodParamController {
         String UserAgent = request.getHeader("User-Agent");
         //3.使用请求对象获取session对象
         HttpSession session = request.getSession();
-        //4.使用响应对象响应信息
+        //4.使用响应对象响应信息 charset=utf-8
         response.getWriter().append("hello world");
     }
 
@@ -60,7 +64,8 @@ public class MethodParamController {
     @RequestMapping("/test2")
     public void test2(InputStream in, OutputStream out) throws IOException {
         //1.将字节流转换为字符流
-        BufferedReader br = new BufferedReader(new InputStreamReader(in));
+        BufferedReader br = new BufferedReader(
+                new InputStreamReader(in));
         String line = null;
         //2.使用字符流实现读取每行数据
         while((line = br.readLine()) != null){
@@ -74,7 +79,7 @@ public class MethodParamController {
      * http://localhost:8888/methodParam/test3
      * //1.当请求头中不包含jsessionid时，自动注入新的session对象给test3方法
      * //2.当请求头中包含jsessionid时，自动注入jsessionid对应的session对象给test3方法
-     * @param session 会话对象  tomcat
+     * @param session 会话对象  tomcat->springmvc->test3
      * @return 逻辑视图名
      */
     @RequestMapping("/test3")
@@ -88,7 +93,7 @@ public class MethodParamController {
      *  post请求  http://localhost:8888/methodParam/test4
      *  请求体： id:1&name:tom&address.id:101&address.city:北京
      * @param s  请求体中参数被自动封装到Student对象中，需要参数名和属性名字一致
-     * @return 逻辑视图名
+     * @return 逻辑视图名  springMVC
      */
     @RequestMapping("/test4")
     public String test4(Student s){
@@ -153,9 +158,27 @@ public class MethodParamController {
         ResponseEntity<String> entity = new ResponseEntity<String>(body,headers,HttpStatus.OK);
         return entity;
     }
+
+    /**
+     * 当方法返回值为String类型时，不能使用输出流对象作为参数
+     * @param out
+     * @return
+     * @throws IOException
+     */
     @RequestMapping("/method")
-    public String method(HttpServletRequest request,HttpSession session,Model m){
-        //参数为输出流 响应对象时 方法返回值必须是void类型
+    public String method(OutputStream out) throws IOException {
+        System.out.println("method...");
+        out.write("hello".getBytes());
         return "jack";
     }
+    /*
+      public void method(req,resp,session,Entity,Student ){
+      }
+
+      public String method(不能使用输出流对象作为参数){
+      }
+
+
+
+     */
 }
