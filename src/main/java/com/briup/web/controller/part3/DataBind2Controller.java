@@ -49,7 +49,7 @@ public class DataBind2Controller {
       * @ModelAttribute 注解用于将方法的返回值绑定到指定的模型属性上
       * @return  返回的字符串添加的到模型属性上
       */
-     @ModelAttribute
+   //  @ModelAttribute
      public String test(){
           System.out.println("添加@ModelAttribute注解的方法被自动调用");
           return "jack";
@@ -59,7 +59,7 @@ public class DataBind2Controller {
       * 在通过任意url访问映射的方法时,自动调用该方法，
       * @return stringList=[A, B, C]值保存在模型对象中
       */
-     @ModelAttribute
+    // @ModelAttribute
      public List<String> test2(){
           System.out.println("test2...");
           return Arrays.asList("A","B","C");
@@ -69,7 +69,7 @@ public class DataBind2Controller {
       * 在通过任意url访问映射的方法时,自动调用该方法，
       * @return  student=Student{id=1, name='jack', dob=null, address=null}值保存在模型对象中
       */
-     @ModelAttribute
+     //@ModelAttribute
      public Student test3(){
           System.out.println("test3....");
           return  new Student(1,"jack");
@@ -161,7 +161,7 @@ public class DataBind2Controller {
       * POST http://localhost:8888/dataBind2/addStudent
       * 请求头 : Content-Type:application/json
       * 请求体 : {"id":1,"name":"jack","dob":"1997-10-20","address":{"id":101,"city":"北京"}}
-      * @param s 将请求体中的json字符串封装成Student对象,自动注入到方法参数s
+      * @param s  springMVC创建 将请求体中的json字符串封装成Student对象,自动注入到方法参数s
       * @return
       */
      @RequestMapping("/addStudent")
@@ -179,6 +179,7 @@ public class DataBind2Controller {
      public Student test13(){
           Student s = new Student(1, "jack");
           s.setAddress(new Address(101,"北京"));
+          s.setDob(new Date());
           return s;
      }
      /**
@@ -200,7 +201,14 @@ public class DataBind2Controller {
      @RequestMapping("/method2")
      @ResponseBody
      public Student method2(@RequestBody Student s){
-          // s 可以从请求参数 ，模型对象中
+          // service ---> dao --->
           return s;
+     }
+
+
+     @RequestMapping("/method3")
+     public String method3(Student s){
+          System.out.println(s);
+          return "jack";
      }
 }

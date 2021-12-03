@@ -2,10 +2,7 @@ package com.briup.web.controller.part3;
 
 import com.briup.bean.Student;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -24,12 +21,12 @@ public class DataInteraction {
      * GET http://localhost:8888/dataInteraction/test?id=1&num=20&name=tom
      * 参数名字要和客户端传的参数名一致,否则需要使用 @RequestParam 来指定参数名
      * @param name String
-     * @param id 方法参数是基本数据类型
+     * @param id 方法参数是基本数据类型  当参数不传递时，导致类型转换异常   null值转换为 对应的整数
      * @param num 包装类型
      * @return 逻辑视图
      */
     @RequestMapping("/test")
-    public String test(String name,int id,Integer num){
+    public String test(String name, @RequestParam int id, Integer num){
         System.out.println("name:"+name);
         System.out.println("id"+id);
         System.out.println("num:"+num);
@@ -50,7 +47,7 @@ public class DataInteraction {
     /**
      * POST  http://localhost:8888/dataInteraction/test3
      * 请求头：Content-Type:application/json
-     * 请求体：["1","2","3"]
+     * 请求体：["1","2","3"] [1,2,3,4]
      * @param like  参数是数组类型
      * @return 逻辑视图名
      */
@@ -75,7 +72,7 @@ public class DataInteraction {
      * POST http://localhost:8888/dataInteraction/test5
      * 请求头： Content-Type：application/json
      * 请求体： {"id":1,"name":"jack","dob":"1992-10-10","address":{"id":101,"city":"上海"}}
-     * @param s 参数是类类型
+     * @param s 参数是类类型 json字符串key 与 属性名 相同
      * @return 逻辑视图名
      */
     @RequestMapping("/test5")
@@ -93,6 +90,7 @@ public class DataInteraction {
      */
     @RequestMapping("/test6")
     public String test6(@RequestBody List<Student> students){
+        System.out.println(students.getClass());// ArrayList
         /**
          * Student{id=1, name='jack', dob=null, address=null}
          * Student{id=2, name='tom', dob=null, address=null}
@@ -107,13 +105,35 @@ public class DataInteraction {
      * 请求头  Content-Type：application/json
      * 请求体 {"id":1,"name":"jack","age":20}
      * @param  map 参数类型为Map集合
+     *      Map<Integer,Student>
+     *             {"202001":{"id":202001,"name":"jack"}}
      * @return 逻辑视图
      */
     @RequestMapping("/test7")
-    public String test7(@RequestBody Map<Integer,Student> map){
+    public String test7(@RequestBody Map<String,String> map){
+        System.out.println(map);
+        System.out.println(map.getClass());
+        return "jack";
+    }
+    @RequestMapping("/testMap")
+    public String method7(@RequestBody Map<Integer,Student> map){
         System.out.println(map);
         return "jack";
     }
+
+
+    /*
+       List<Student>
+       Map<Integer,Student>
+       List<Map<Integer,Student>>
+
+     */
+    @RequestMapping("/method7")
+    public String method7(@RequestBody List<Map<Integer,Student>> list){
+        System.out.println(list);
+        return "jack";
+    }
+
 
     /*
        test(Map<Integer,Student> map)
@@ -127,7 +147,7 @@ public class DataInteraction {
      * @return 返回单值
      */
     @RequestMapping("/test8")
-    @ResponseBody
+    @ResponseBody  //将方法的返回值作为响应体内容返回
     public String test8(){
         //响应体：hello world字符串
         return "hello world";

@@ -12,12 +12,12 @@ import java.util.Date;
  *
  */
 public class Student {
-	private int id;//学号
+	private int id;//学号 0 Integer null
 	private String name;//姓名
 	//@DateTimeFormat 可以解决表单接收到的字符串日期参数转换为Date类型
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	//@JsonFormat 可以解决json字符串中 时间字符串20200101 转化为java对象的格式类型
-	//@JsonFormat(pattern = "yyyyMMdd",timezone = "GMT+8")
+	//@JsonFormat(pattern = "yyyy/MM/dd",timezone = "GMT+8")
 	@JsonSerialize(using = DateJsonSerialize.class)
 	private Date dob;//出生日期
 	//一个学生对应唯一的一个地址信息
