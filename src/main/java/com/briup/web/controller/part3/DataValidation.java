@@ -2,6 +2,7 @@ package com.briup.web.controller.part3;
 
 import com.briup.bean.Teacher;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,7 +44,13 @@ public class DataValidation {
         }
         return "success data param";//正确提示
     }
-
+    @RequestMapping("/valid")
+    public String valid(Model m){
+        //访问Controller跳转到valid页面的时候，需要向模型中添加一个名字叫teacher的对象，否则会报错
+        m.addAttribute("teacher",new Teacher());
+        System.out.println("访问valid页面");
+        return "valid";
+    }
     /**
      * 使用post表单提交新增教师的信息
      * POST http://localhost:8888/dataValidation/test2
