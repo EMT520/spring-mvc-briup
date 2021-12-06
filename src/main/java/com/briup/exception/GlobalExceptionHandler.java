@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-@ControllerAdvice
+//@ControllerAdvice
 public class GlobalExceptionHandler {
     /**
      * 当web层中抛出异常时，统一处理，并返回指定的错误页面

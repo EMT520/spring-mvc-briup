@@ -1,7 +1,9 @@
 package com.briup.web.controller.part3;
 
+import com.briup.bean.Student;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletException;
@@ -62,6 +64,9 @@ public class PageTurnController {
     public void test3(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         /**
          * 注意: /表示服务器的根目录
+         * 访问中 ：
+         *  localhost:8888/pageTurn/other  404
+         *
          */
         String path = "/pageTurn/other";
         response.sendRedirect(path);
@@ -107,6 +112,7 @@ public class PageTurnController {
     /**
      *
      * @return 内部跳转
+     * 第一个斜杆 是项目根目录
      */
     @RequestMapping("/test8")
     public ModelAndView test8(){
@@ -115,6 +121,7 @@ public class PageTurnController {
     /**
      *
      * @return 重定向
+     * 第一个斜杆 项目根目录
      */
     @RequestMapping("/test9")
     public ModelAndView test9(){
@@ -122,7 +129,11 @@ public class PageTurnController {
     }
     /*
        返回值为String: 表示 另一个资源  视图资源  url资源
-
-
      */
+    @RequestMapping("/hello")
+    @ResponseBody
+    public Student method(){
+        System.out.println("hello......");
+        return new Student(1,"jack");
+    }
 }
