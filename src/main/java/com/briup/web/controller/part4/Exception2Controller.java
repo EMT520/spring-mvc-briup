@@ -13,7 +13,13 @@ import java.sql.SQLException;
 @Controller
 @RequestMapping("/exception2")
 public class Exception2Controller{
-
+    /**
+     * 当方法抛出异常时，利用spring框架提供的AOP功能，
+     * 可以在运行期间 添加处理异常信息的代码
+     * @param name
+     * @return
+     * @throws Exception
+     */
     @RequestMapping("/test")
     public String test(String name) throws Exception {
         if(name.equals("jack")){

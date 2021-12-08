@@ -21,5 +21,6 @@ public class DateJsonSerialize extends JsonSerializer<Date> {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         jsonGenerator.writeString(format.format(date));
         //将Date()对象转换为yyyy-MM-dd格式的字符串 拼接到Studentjson字符串
+        //phone = phone.getArea()+"-"+phone.getTel()
     }
 }

@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 /**
  * 统一Controller中RESTFul风格接口返回的结果
+ * Result=Map+student
  */
 public class Result implements Serializable {
 
@@ -14,13 +15,16 @@ public class Result implements Serializable {
     private Object data;
 
     public Result() {}
-
+    public Result(ResultCode rt){
+        this.code = rt.code();
+        this.msg = rt.message();
+    }
     public Result(Integer code, String msg) {
         this.code = code;
         this.msg = msg;
     }
 
-    private void setResultCode(ResultCode code) {
+    public void setResultCode(ResultCode code) {
         this.code = code.code();
         this.msg = code.message();
     }

@@ -2,6 +2,7 @@ package com.briup.web.controller.part3;
 
 import com.briup.bean.Address;
 import com.briup.bean.Student;
+import com.briup.bean.User;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -9,10 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  *  第三部分 1.数据绑定
@@ -28,7 +28,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/dataBind2")
-@Scope("prototype") //原型模式，每次请求都会创建一个处理器对象，默认是单例对象
+//@Scope("prototype") //原型模式，每次请求都会创建一个处理器对象，默认是单例对象
 public class DataBind2Controller {
      /**
       * GET url?name=jack
@@ -131,7 +131,7 @@ public class DataBind2Controller {
       * 自动调用@InitBinder方法,将字符串时间转换为Date对象
       * @param wb
       */
-     //@InitBinder
+     @InitBinder
      public void StringConvertDate(WebDataBinder wb){
           System.out.println("自动调用@InitBinder方法,将字符串时间转换为Date对象");
           //1.设置字符串转换格式
@@ -201,14 +201,52 @@ public class DataBind2Controller {
      @RequestMapping("/method2")
      @ResponseBody
      public Student method2(@RequestBody Student s){
-          // service ---> dao --->
+         // springMVC -->s --->web-->service-->dao
           return s;
+     }
+     @RequestMapping("/method5")
+     @ResponseBody
+     public String method4(){
+          return "jack";//响应体中字符串
+     }
+     public void method5(HttpServletResponse response) throws Exception{
+          response.getWriter().append("jack");
+     }
+     @RequestMapping("/user/{id}")
+     @ResponseBody
+     public Map findUserInfo(@PathVariable Integer id){
+          //return new Student(1,"lisi");
+          HashMap<Object, Object> map = new HashMap<>();
+          if(id == 0){
+               //错误信息
+               map.put("code","10001");
+               map.put("msg","学号不为0");
+               map.put("data",null);
+               return map;
+          }
+          //成功查询：
+          map.put("code","10000");
+          map.put("msg","查询成功");
+          map.put("student",new Student(id,"tom"));
+          return map;
+          //如果查询失败后，如何返回数据 ？？？
+          //查询失败  返回error.jsp
+     }
+     @RequestMapping("/findAll")
+     @ResponseBody
+     public List<Student> findAllStudent(){
+          Student s = new Student(1, "jack");
+          Student s2 = new Student(2, "tom");
+          return  Arrays.asList(s,s2);
      }
 
 
+
+
      @RequestMapping("/method3")
-     public String method3(Student s){
+    // @ResponseBody
+     public String method3(@RequestBody Student s){
           System.out.println(s);
-          return "jack";
+          return "jack";// 响应体中的字符串信息
      }
 }

@@ -1,14 +1,20 @@
 package com.briup.web.controller.part4;
 
+import com.briup.bean.Student;
 import com.briup.bean.User;
+import com.briup.exception.StudentException;
 import com.briup.service.IUserService;
 import com.briup.service.UserServiceImpl;
+import com.briup.util.Result;
+import com.briup.util.ResultCode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,7 +45,38 @@ public class UserController {
             map.put("code",10001);
             map.put("msg","查询失败："+e.getMessage());
         }
-
         return map;
     }
+
+    /**
+     * http://localhost:8888/user/user2/0
+     * @return
+     */
+    @RequestMapping("/findStudent")
+    @ResponseBody
+    public Result findStudent2(){
+        //return new Result(1,"成功");
+        //return  new Result(ResultCode.SUCCESS);
+        Student student = new Student(1, "tom");
+        //return  Result.success(student);
+        return  Result.failure(ResultCode.DATA_NONE);
+    }
+    @RequestMapping("/user2/{id}")
+    @ResponseBody
+    public Result findUserById2(@PathVariable Integer id){
+        try {
+            User user = userService.findUserById(id);
+            return Result.success(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+            //请求失败，将失败的信息告诉前端的访问的用户
+           // Result result = new Result(10001, e.getMessage());
+            String msg = "程序内容错误，联系管理员";
+            if(e instanceof StudentException){
+                msg = e.getMessage();
+            }
+            return new Result(10001,msg);
+        }
+    }
+
 }

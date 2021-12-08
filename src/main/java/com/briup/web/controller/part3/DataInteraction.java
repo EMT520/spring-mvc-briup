@@ -26,7 +26,7 @@ public class DataInteraction {
      * @return 逻辑视图
      */
     @RequestMapping("/test")
-    public String test(String name, @RequestParam int id, Integer num){
+    public String test(String name,int id, Integer num){
         System.out.println("name:"+name);
         System.out.println("id"+id);
         System.out.println("num:"+num);

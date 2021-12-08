@@ -3,6 +3,8 @@ package com.briup.web.controller.part2;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+
 /**
  *  第二部分 4.数据绑定
  *  主要学习内容：
@@ -54,6 +56,11 @@ public class DataBindController {
         System.out.println("name:"+name);
         return "jack";
     }
+    @RequestMapping("/method")
+    public String method(Integer id){
+        System.out.println("id:"+id);
+        return "jack";
+    }
 
     /**
      * http://localhost:8888/dataBind/test/202101
@@ -92,6 +99,12 @@ public class DataBindController {
     @RequestMapping("/test6")
     public String test6(@CookieValue("JSESSIONID") String jsessionId){
         System.out.println("jsessionId:"+jsessionId);
+        return "jack";
+    }
+    //创建session的method
+    @RequestMapping("/method2")
+    public String method2(HttpSession session){
+        System.out.println(session.getId());
         return "jack";
     }
     /**
