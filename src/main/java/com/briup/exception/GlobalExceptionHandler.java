@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-//@ControllerAdvice
+//@ControllerAdvice //切面类
 public class GlobalExceptionHandler {
     /**
      * 当web层中抛出异常时，统一处理，并返回指定的错误页面
@@ -49,6 +49,18 @@ public class GlobalExceptionHandler {
         result.put("data",null);//响应数据为空
         return result;
     }
+    /*
+      @ExceptionHandler({Exception.class})
+      将web层中所有的目前类中的所有方法(连接点)作为切入点
+      动态生成目标对象的代理对象，通过代理对象
+      1.调用web层的切入点的方法
+      2.当切入点异常发生时，调用异常处理代码进行执行
+
+        @ExceptionHandler({StudentException.class})
+        选择web层中目标对象中抛出指定的StudentException
+        的连接点，作为切入点。进行动态的添加异常处理代码
+
+     */
     @ExceptionHandler({Exception.class})
     @ResponseBody
     public Result handlerREST(Exception e){

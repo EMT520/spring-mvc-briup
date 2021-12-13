@@ -17,6 +17,10 @@ public class StudentServiceImpl implements IStudentService{
     }
     @Override
     public Student findStudentById(Integer id) {
+        System.out.println("调用service层的方法");
+        if (id == 20) {
+            throw new RuntimeException("service模拟异常");
+        }
         return dao.selectStudentById(id);
     }
 }

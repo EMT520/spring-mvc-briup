@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-@Controller
+@Controller //添加到目标类上，创建出目标对象
 @RequestMapping("/api")
 public class StudentController {
     @Autowired

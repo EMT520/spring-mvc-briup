@@ -10,7 +10,7 @@
     <!--读取配置文件的路径  -->
     <init-param>
       <param-name>contextConfigLocation</param-name>
-      <param-value>classpath:spring-web-mvc-file.xml</param-value>
+      <param-value>classpath:spring-web-mvc-aop.xml</param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>
