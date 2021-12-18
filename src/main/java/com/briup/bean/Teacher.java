@@ -30,6 +30,11 @@ public class Teacher {
 	public Teacher() {
 	}
 
+	public Teacher(Integer id, String name) {
+		this.id = id;
+		this.name = name;
+	}
+
 	public int getSalary() {
 		return salary;
 	}
